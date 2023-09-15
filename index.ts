@@ -5,12 +5,14 @@ import mongoose from 'mongoose';
 import bodyParser = require('body-parser');
 import productRouter from './routes/Product';
 import cors from 'cors';
+import cookieParser from "cookie-parser";
 
 //For env File 
 dotenv.config();
 
 const app: Application = express();
 app.use(cors())
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 const port = process.env.PORT || 8000;

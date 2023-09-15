@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import Product from "../models/Product";
+import { Request, Response} from "express"
 
 
-export const createProduct = async ( req : any, res : any) => {
+export const createProduct = async ( req : Request, res : Response ) => {
     try {
         const product = await new Product(req.body)
         const doc = await product.save()
@@ -11,7 +12,7 @@ export const createProduct = async ( req : any, res : any) => {
         res.status(400).json(error)
     }
 }
-export const deleteProduct = async (req : any,res: any) => {
+export const deleteProduct = async (req : Request,res: Response ) => {
     try {
         const productid = req.params
         const product = await Product.findByIdAndDelete(productid.id)
@@ -20,7 +21,7 @@ export const deleteProduct = async (req : any,res: any) => {
         res.status(400).json(error)
     }
 }
-export const fetchAllProducts = async (req: any, res: any) => {
+export const fetchAllProducts = async (req: Request, res: Response ) => {
     try {
         const products = await Product.find();
         res.status(200).json(products)
@@ -28,7 +29,7 @@ export const fetchAllProducts = async (req: any, res: any) => {
         res.status(400).json(error)
     }
 }
-export const fetchProductById = async (req : any ,res : any) => {
+export const fetchProductById = async (req :  Request,res : Response ) => {
     try {
         const productId = req.params;
         console.log(productId);

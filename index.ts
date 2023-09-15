@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import userRouter from './routes/User';
 import mongoose from 'mongoose';
 import bodyParser = require('body-parser');
+import productRouter from './routes/Product';
 
 //For env File 
 dotenv.config();
@@ -24,6 +25,7 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to Express & TypeScript Server');
 });
 app.use("/user", userRouter);
+app.use("/product", productRouter)
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);
 });

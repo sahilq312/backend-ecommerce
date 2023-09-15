@@ -1,10 +1,13 @@
 import express from "express";
-import { createProduct } from "../controlllers/Product";
+import { createProduct, deleteProduct, fetchAllProducts, fetchProductById } from "../controlllers/Product";
 
 const productRouter = express.Router()
 
 productRouter
-    .get("/create", createProduct)
+    .post("/create", createProduct)
+    .delete("/:id", deleteProduct)
+    .get("/", fetchAllProducts)
+    .get("/:id", fetchProductById)
 
 
 

@@ -4,11 +4,13 @@ import userRouter from './routes/User';
 import mongoose from 'mongoose';
 import bodyParser = require('body-parser');
 import productRouter from './routes/Product';
+import cors from 'cors';
 
 //For env File 
 dotenv.config();
 
 const app: Application = express();
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 const port = process.env.PORT || 8000;

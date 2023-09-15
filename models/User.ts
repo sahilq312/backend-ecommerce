@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-interface USER {
+export interface USER {
     name : string,
     email : string,
     password : string
@@ -8,7 +8,7 @@ interface USER {
 
 
 const userSchema = new Schema<USER>({
-    name: {type: String,required: true, unique: true },
+    name: {type: String,required: true},
     email: {type: String ,required: true, unique: true },
     password: {type: String ,required: true}
 }

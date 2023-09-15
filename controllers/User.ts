@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv"
 
-const secret : string = process.env.JWT_SECRET as string;
 
 
 export const register = async (req: Request, res: Response) => {
@@ -26,13 +25,17 @@ export const register = async (req: Request, res: Response) => {
             })
             //saving data in database
             await user.save()
-
+            
             //creating token
-            
-            
-
+            let secret : string = process.env.JWT_SECRET as string;
+            const token = jwt.sign({id:user.id}, secret, {expiresIn: '2d'})
             //send data in response
-            res.status(200).json({user})
+            res
+                .cookie("jwt", token ,{
+                    httpOnly : true
+                })
+                .status(200)
+                .json(token)
         }
     }
     // if any server error
@@ -53,6 +56,9 @@ export const login = async (req: Request, res: Response) => {
         const validpass = await bcrypt.compare(req.body.password, user.password)
         if (!validpass) return res.status(400).json('invalid password')
 
+        //create token
+        let secret : string = process.env.JWT_SECRET as string;
+        const token = jwt.sign({id:user.id}, secret, {expiresIn: '2d'})
         //send response
         res.status(200).json("logged in")
     } catch (error) {

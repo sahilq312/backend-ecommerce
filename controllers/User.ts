@@ -32,7 +32,8 @@ export const register = async (req: Request, res: Response) => {
             //send data in response
             res
                 .cookie("jwt", token ,{
-                    httpOnly : true
+                    httpOnly : true,
+                    expires : new Date(Date.now() + 24*60*60*1000)
                 })
                 .status(200)
                 .json(token)
@@ -60,7 +61,11 @@ export const login = async (req: Request, res: Response) => {
         let secret : string = process.env.JWT_SECRET as string;
         const token = jwt.sign({id:user.id}, secret, {expiresIn: '2d'})
         //send response
-        res.status(200).json("logged in")
+        res.cookie("token" , token, {
+            httpOnly: true,
+            expires : new Date(Date.now()+ 24*60*60*1000)
+        })
+        .status(200).json("logged in")
     } catch (error) {
         console.log(error)
         res.status(500).send('internal server error')

@@ -2,8 +2,6 @@ import express, { NextFunction, Request, Response } from 'express'
 import User, { USER } from '../models/User';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv"
-
 
 
 export const register = async (req: Request, res: Response) => {

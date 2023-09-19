@@ -1,11 +1,14 @@
 import express, { Express, Request, Response , Application } from 'express';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 import userRouter from './routes/User';
 import mongoose from 'mongoose';
 import bodyParser = require('body-parser');
 import productRouter from './routes/Product';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
+import { verify } from 'jsonwebtoken';
+import myMiddleware from './middlewares/verify';
+import isAuth from './middlewares/verify';
 
 //For env File 
 dotenv.config();
@@ -15,6 +18,7 @@ app.use(cors())
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
 const port = process.env.PORT || 8000;
 
 main().catch(err => console.log(err));
@@ -24,11 +28,10 @@ async function main() {
 
 }
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to Express & TypeScript Server');
-});
+
 app.use("/user", userRouter);
-app.use("/product", productRouter)
+app.use("/product" ,productRouter)
+
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);
 });

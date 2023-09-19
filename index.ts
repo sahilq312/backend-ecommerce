@@ -1,6 +1,7 @@
 import express, { Express, Request, Response , Application } from 'express';
 import * as dotenv from 'dotenv';
 import userRouter from './routes/User';
+//import authRouter from "./routes/Auth";
 import mongoose from 'mongoose';
 import bodyParser = require('body-parser');
 import productRouter from './routes/Product';
@@ -9,6 +10,7 @@ import cookieParser from "cookie-parser";
 import { verify } from 'jsonwebtoken';
 import myMiddleware from './middlewares/verify';
 import isAuth from './middlewares/verify';
+import authRouter from './routes/Auth';
 
 //For env File 
 dotenv.config();
@@ -28,9 +30,9 @@ async function main() {
 
 }
 
-
-app.use("/user", userRouter);
-app.use("/product" ,productRouter)
+app.use("/auth", authRouter)
+app.use("/user",isAuth, userRouter);
+app.use("/product", isAuth ,productRouter)
 
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);

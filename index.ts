@@ -32,7 +32,7 @@ async function main() {
 
 app.use("/auth", authRouter)
 app.use("/user",isAuth, userRouter);
-app.use("/product", isAuth ,productRouter)
+app.use("/product" ,productRouter)
 
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);

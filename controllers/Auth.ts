@@ -69,7 +69,7 @@ export const login = async (req: Request, res: Response) => {
             sameSite: "strict",
             maxAge: 15*24*60*60*1000
         });
-        res.status(200).json({ id: user.id });
+        res.status(200).json({ email: user.email });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
@@ -88,5 +88,17 @@ export const logout = async (req: Request, res: Response) => {
             .sendStatus(200)
     } catch (error) {
         res.status(400).json(error)
+    }
+}
+
+export const checkAuth = async(req : any, res : any) => {
+    try {
+        const userId = req.verified.id;
+        const user = await User.findOne({_id : userId})
+        res.status(200).json({ email: user?.email })
+    } catch (error) {
+        res.status(500).json(error)
+        console.log(error);
+        
     }
 }

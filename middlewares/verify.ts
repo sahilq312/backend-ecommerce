@@ -11,8 +11,7 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
   
   let secret: string = process.env.JWT_SECRET as string;
   try {
-    const cookie = await req.cookies
-  const token = cookie.jwt;
+    const token = await req.cookies.jwt
 
   if (!token) {
     throw new Error();

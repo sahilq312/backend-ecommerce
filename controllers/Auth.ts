@@ -28,14 +28,11 @@ export const register = async (req: Request, res: Response) => {
             let secret: string = process.env.JWT_SECRET as string;
             const token = jwt.sign({ id: user.id }, secret, { expiresIn: '2d' })
             //send data in response
-            res
-                .cookie('jwt', token, {
+            res.status(200).cookie('jwt', token, {
+                    domain: "http://localhost:5173",
                     httpOnly: true,
-                    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-                    secure: true
-                })
-                .status(200)
-                .json(token)
+                    expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
+                }).json(token)
         }
     }
     // if any server error
@@ -67,12 +64,11 @@ export const login = async (req: Request, res: Response) => {
         const token = jwt.sign({ id: user.id }, secret, { expiresIn: '2d' });
 
         // Set the JWT token as an HttpOnly cookie
-        res.cookie('token', token, {
+        res.cookie('jwt', token, {
             httpOnly: true,
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            sameSite: "strict",
+            maxAge: 15*24*60*60*1000
         });
-
-        // Send a success response with user ID
         res.status(200).json({ id: user.id });
     } catch (error) {
         console.error(error);
@@ -85,7 +81,9 @@ export const logout = async (req: Request, res: Response) => {
         res
             .cookie('jwt', null, {
                 expires: new Date(Date.now()),
-                httpOnly: true
+                httpOnly: true,
+                secure: true,
+                sameSite: 'strict'
             })
             .sendStatus(200)
     } catch (error) {

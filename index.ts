@@ -16,11 +16,15 @@ import authRouter from './routes/Auth';
 dotenv.config();
 
 const app: Application = express();
-app.use(cors())
-app.use(cookieParser())
+app.use(cors({
+  origin: [
+    "http://localhost:5173"
+  ],
+  credentials: true
+}))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
+app.use(cookieParser())
 const port = process.env.PORT || 8000;
 
 main().catch(err => console.log(err));
@@ -32,7 +36,7 @@ async function main() {
 
 app.use("/auth", authRouter)
 app.use("/user",isAuth, userRouter);
-app.use("/product" ,productRouter)
+app.use("/product",isAuth ,productRouter)
 
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);

@@ -17,9 +17,7 @@ const isAuth = async (req: Request, res: Response, next: NextFunction) => {
     throw new Error();
   }
   const verified = jwt.verify(token, secret);
-  (req as any).verified = verified;
-  console.log(verified);
-  
+  (req as any).verified = verified;  
   next();
   } catch (error) {
     res.status(401).send(error)

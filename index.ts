@@ -11,6 +11,7 @@ import { verify } from 'jsonwebtoken';
 import myMiddleware from './middlewares/verify';
 import isAuth from './middlewares/verify';
 import authRouter from './routes/Auth';
+import cartRouter from './routes/Cart';
 
 //For env File 
 dotenv.config();
@@ -37,6 +38,7 @@ async function main() {
 app.use("/auth", authRouter)
 app.use("/user",isAuth, userRouter);
 app.use("/product",isAuth ,productRouter)
+app.use("/cart",isAuth, cartRouter)
 
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);

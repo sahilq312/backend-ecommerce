@@ -32,7 +32,6 @@ export const fetchAllProducts = async (req: Request, res: Response ) => {
 export const fetchProductById = async (req : Request,res : Response ) => {
     try {
         const productId = req.params;
-        console.log(productId);
         const product = await Product.findById(productId.id);
         res.status(200).json(product);        
     } catch (error) {

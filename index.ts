@@ -12,6 +12,7 @@ import myMiddleware from './middlewares/verify';
 import isAuth from './middlewares/verify';
 import authRouter from './routes/Auth';
 import cartRouter from './routes/Cart';
+import orderRouter from './routes/Order';
 
 //For env File 
 dotenv.config();
@@ -39,6 +40,7 @@ app.use("/auth", authRouter)
 app.use("/user",isAuth, userRouter);
 app.use("/product",isAuth ,productRouter)
 app.use("/cart",isAuth, cartRouter)
+app.use("/order",isAuth, orderRouter)
 
 app.listen(port, () => {
   console.log(`Server is Fire at http://localhost:${port}`);

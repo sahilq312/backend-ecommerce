@@ -3,6 +3,8 @@ import Cart from "../models/Cart"
 export const addToCart = async (req: any, res: any) => {
     const id = req.verified.id
     const cart = new Cart({ ...req.body, userId: id })
+    //console.log(cart);
+    
     try {
         await cart.save()
         res.status(200).json(cart)

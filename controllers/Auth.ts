@@ -32,7 +32,7 @@ export const register = async (req: Request, res: Response) => {
                     domain: "http://localhost:5173",
                     httpOnly: true,
                     expires: new Date(Date.now() + 24 * 60 * 60 * 1000)
-                }).json(token)
+                }).json({ email: user.email, role: user.role })
         }
     }
     // if any server error
@@ -68,8 +68,7 @@ export const login = async (req: Request, res: Response) => {
             httpOnly: true,
             sameSite: "strict",
             maxAge: 15*24*60*60*1000
-        });
-        res.status(200).json({ email: user.email });
+        }).status(200).json({ email: user.email, role: user.role });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
